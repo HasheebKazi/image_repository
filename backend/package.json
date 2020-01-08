@@ -1,0 +1,17 @@
+{
+  "name": "image_repository_backend",
+  "version": "0.1.0",
+  "description": "This is the backend for my image repository webapp.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hasheeb Kazi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
