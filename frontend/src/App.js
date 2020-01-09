@@ -1,10 +1,18 @@
 import React from 'react';
-import './App.css';
+
+// react components
+import Layout from './containers/Layout/Layout';
+import ImageRepository from './containers/ImageRepository/ImageRepository';
+
+// css
+import classes from './App.module.css';
 
 function App() {
     return (
-        <div>
-            <h1>Work in progress.</h1>
+        <div className={ classes.App }>
+            <Layout>
+                <ImageRepository />
+            </Layout>
         </div>
     );
 }
