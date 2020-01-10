@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 // react modules
-import MainHeader from '../Header/Header';
-import MainFooter from '../Footer/Footer';
+import MainHeader from '../../components/wrapper/Header/Header';
+import MainFooter from '../../components/wrapper/Footer/Footer';
 
 // css
 import classes from './Layout.module.css';
