@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions';
 
 // react components
 import ImageRepository from '../../components/Repository/ImageRepository';
@@ -36,4 +38,16 @@ class Main extends Component {
     }
 }
 
-export default Main;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.loggedIn
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: () => dispatch({ type: actionTypes.LOGIN })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
