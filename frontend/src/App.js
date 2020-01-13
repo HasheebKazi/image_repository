@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react components
-import Layout from './containers/Layout/Layout';
+import Layout from './HOC/Layout/Layout';
 import ImageRepository from './containers/ImageRepository/ImageRepository';
 
 // css
