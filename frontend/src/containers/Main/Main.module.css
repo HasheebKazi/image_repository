@@ -1,6 +1,7 @@
 .MainWrapper {
     width: 100%;
     margin: 0 auto;
+    min-height: 100vh;
     font-size: 1.2rem;
     /* background-color: #eee; */
 }

@@ -1,0 +1,69 @@
+.FormPage {
+    width: 90%;
+    margin: 200px auto 0 auto;
+    background-color: #ccc;
+
+    
+}
+
+.FormContainer {
+    width: 50%;
+    padding: 20px 0;
+    margin: 0 auto;
+}
+
+.FormControls {
+    width: 100%;
+    margin: 10px auto;
+    padding: 5px 10px;
+}
+
+.FormInput__Label {
+    width: 80%;
+    margin: 0 auto 10px auto;
+
+    font-size: 30px;
+    letter-spacing: 1px;
+
+    display: block;
+    box-sizing: border-box;
+}
+
+.FormInput__Input {
+    width: 80%;
+    height: 40px;
+    margin: 0 auto;
+    border: none;
+    border-bottom: 1px solid #eee;
+    background-color: transparent;
+
+    font-size: 20px;
+
+    display: block;
+    box-sizing: border-box;
+}
+
+.FormInput__Input:focus,
+.FormInput__Input:active {
+    outline: none;
+    border-bottom: 1px solid green;
+    
+}
+
+.FormButton {
+    padding: 10px;
+    margin: 10px auto;
+    
+
+    background-color: white;
+
+    font-size: 20px;
+
+    display: block;
+}
+
+.FormButton:focus,
+.FormButton:active {
+    outline: none;
+    background-color: green;
+}
