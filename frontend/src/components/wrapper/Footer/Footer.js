@@ -9,7 +9,7 @@ class Footer extends Component {
 
     // this state is only used for UI elements
     state = {
-        targetedMsg: ''
+        targetedMsg: 'This is a message'
     }
 
     componentDidMount() {
@@ -22,22 +22,38 @@ class Footer extends Component {
                 this.setState({ targetedMsg: 'no data' });
             }
         }).catch(error => {
-            this.setState({ targetedMsg: 'error' });
+            this.setState({ targetedMsg: 'This is a message! It has words and punctuation.e' });
             console.log(error);
         })
     }
 
     render() {
         return (
-            <div className={ classes.Footer }>
-                <div>
-                    ... Dummy Links and Icons
+            <div className={ classes.Footer } >
+
+                <div className={ classes.FooterNav } >
+                    <div className={ classes.FooterNav__Items } >Todo's</div>
+                    <div className={ classes.FooterNav__Items } >Github</div>
+                    <div className={ classes.FooterNav__Items } >Blank</div>
                 </div>
-                <div>
-                    ... Dummy Links and Icons
+
+                <div className={ classes.Footer__Info } >
+                    <div className={ classes.Footer__Message } >{ this.state.targetedMsg }</div>
+                    <div className={ classes.Footer__CompanyInfo } >
+                        <div>
+                            <h3>Project Info</h3>
+                            <div>
+                                Full Stack stock image ecommerce shop. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-        <           p>{ this.state.targetedMsg }</p>
+
+                <div className={ classes.Footer__Social } >
+
+                    <div style={{ textAlign: 'center' }}>
+                        Copyright © 2020 Me Inc. All rights reserved.
+                    </div>
                 </div>
             </div>
         );
