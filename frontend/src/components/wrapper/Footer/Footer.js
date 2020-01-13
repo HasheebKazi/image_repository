@@ -22,7 +22,7 @@ class Footer extends Component {
                 this.setState({ targetedMsg: 'no data' });
             }
         }).catch(error => {
-            this.setState({ targetedMsg: 'This is a message! It has words and punctuation.e' });
+            this.setState({ targetedMsg: 'This is a message! It has words and punctuation!' });
             console.log(error);
         })
     }
