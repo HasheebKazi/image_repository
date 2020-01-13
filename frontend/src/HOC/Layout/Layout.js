@@ -20,8 +20,8 @@ class Layout extends Component {
             <React.Fragment>
                 <MainHeader />
 
-                <main className={ classes.MainContent }> { this.props.children } </main>
-                
+                    <main className={ classes.MainContent }> { this.props.children } </main>
+
                 <MainFooter />
             </React.Fragment>
         );

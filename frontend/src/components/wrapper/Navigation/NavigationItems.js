@@ -9,7 +9,7 @@ const NavationItems = (props) => {
         <nav className={classes.Nav} >
             <ul className={classes.Nav__Left} >
                 <li className={classes.Nav__Item} >
-                    <NavLink className={classes.Nav__Link} to='/'>Pictures</NavLink>
+                    <NavLink className={classes.Nav__Link} to='/main'>Pictures</NavLink>
                 </li>
                 <li className={classes.Nav__Item} >
                     <NavLink className={classes.Nav__Link} to='/search'>Search</NavLink>
@@ -20,6 +20,12 @@ const NavationItems = (props) => {
             </div>
 
             <ul className={classes.Nav__Right} >
+                <li className={classes.Nav__Item} >
+                    <NavLink className={classes.Nav__Link} to='/collections'>Collections</NavLink>
+                </li>
+                <li className={classes.Nav__Item} >
+                    <NavLink className={classes.Nav__Link} to='/upload'>Upload</NavLink>
+                </li>
                 <li className={classes.Nav__Item} >
                     <NavLink className={classes.Nav__Link} to='/login'>Login</NavLink>
                 </li>
