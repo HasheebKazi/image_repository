@@ -13,6 +13,7 @@ const multer = require('multer');
 
 // routes
 const routes = require('./routes/routes');
+const form_routes = require('./routes/formRoutes');
 
 // controllers
 
@@ -49,11 +50,14 @@ app.use(multer({
 }).single('image'));
 
 // app.use(csrfProtection);
-
+app.use('/uploads', form_routes);
 app.use('/', routes);
 app.use((error, req, res, next) => {
     // res.status(error.httpStatusCode).render(...);
     // res.redirect('/500');
+
+    
+
     res.status(404).json({
         error: 'something went wrong'
     });
