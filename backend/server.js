@@ -1,13 +1,20 @@
 // builtins
 const path = require('path');
 
+// get and set environmental variables from .env file in root directory
+require('dotenv').config()
+
 // external modules
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-// const csrf = require('csurf');
+// const mongoose = require('mongoose');
+// const session = require('express-session');
+// const MongoDBStore = require('connect-mongodb-session')(session);
 
 // internal modules
+const MONGODB_URI = process.env.MONGODB_URI;
+// console.log(MONGODB_URI);
 
 // models
 
@@ -41,6 +48,8 @@ const fileStorage = multer.diskStorage({
 
 // server config
 app.use(express.static(path.join(__dirname, 'public')));
+// configure the root uploads folder to work as a static
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // configure multer
