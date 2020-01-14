@@ -8,6 +8,7 @@ require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const cors = require('cors');
 // const mongoose = require('mongoose');
 // const session = require('express-session');
 // const MongoDBStore = require('connect-mongodb-session')(session);
@@ -47,6 +48,12 @@ const fileStorage = multer.diskStorage({
 });
 
 // server config
+
+// enables cors headers
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 // configure the root uploads folder to work as a static
 app.use('/images', express.static(path.join(__dirname, 'uploads')));
@@ -64,9 +71,6 @@ app.use('/', routes);
 app.use((error, req, res, next) => {
     // res.status(error.httpStatusCode).render(...);
     // res.redirect('/500');
-
-    
-
     res.status(404).json({
         error: 'something went wrong'
     });

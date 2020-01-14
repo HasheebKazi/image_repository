@@ -15,7 +15,6 @@ class Footer extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/msg')
         .then(res => {
-            console.log(res.data);
             if (res.data) {
                 this.setState({ targetedMsg: res.data['msg'] });
             } else {
