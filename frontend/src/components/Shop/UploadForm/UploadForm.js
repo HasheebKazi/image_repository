@@ -51,7 +51,11 @@ class LoginPage extends Component {
     fileUpload(file, name) {
         const formData = new FormData();
         formData.set('image', 'name');
-        formData.append('image', file);
+        formData.append('image', file, {
+            filename: `image.png`,
+            contentType: 'application/octet-stream',
+            mimeType: 'application/octet-stream'   
+        });
         formData.append('name', name);
 
         const payload = {
@@ -61,40 +65,12 @@ class LoginPage extends Component {
             },
             url: 'http://localhost:4000/uploads',
             headers: {
-                'Content-Type': 'multipart/form-data' 
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json',
             }
         }
-
         return axios(payload);
-
-        // return axios.post(url, formData, config);
     }
-
-    // onImageUpload(event) {
-    //     event.preventDefault();
-    //     this.fileUpload(this.state.file).then((response) => {
-    //         console.log(response.data);
-    //     })
-    //     console.log('[UploadImageForm] starting image upload.');
-
-        // const payload = {
-        //     method: 'POST',
-        //     data: {
-        //         test: 'test payload'
-        //     },
-        //     url: 'http://localhost:4000/uploads'
-        // }
-
-        // axios(payload)
-        //     .then(reponse => {
-        //         console.log(reponse.data);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
-
-    //     console.log('[UploadImageForm] finish image upload.');
-    // }
 
     render() {
         return (

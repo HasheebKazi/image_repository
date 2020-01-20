@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const cors = require('cors');
 // const mongoose = require('mongoose');
-// const session = require('express-session');
+const session = require('express-session');
 // const MongoDBStore = require('connect-mongodb-session')(session);
 
 // internal modules
@@ -28,7 +28,6 @@ const form_routes = require('./routes/formRoutes');
 // server initialization
 // const csrfProtection = csrf();
 const app = express();
-const multipartFormDataMW = multer({ dest: './public/images/user_uploads' });
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
@@ -40,7 +39,7 @@ const fileFilter = (req, file, cb) => {
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'images');
+        cb(null, 'public/images/uploads');
     },
     filename: (req, file, cb) => {
         cb(null, new Date().toISOString() + '-' + file.originalname);
@@ -55,8 +54,6 @@ app.use(cors({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-// configure the root uploads folder to work as a static
-app.use('/images', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // configure multer
@@ -65,14 +62,23 @@ app.use(multer({
     fileFilter: fileFilter
 }).single('image'));
 
+app.use((req, res, next) => {
+    console.log('got a request');
+    console.log('form data:', req.body);
+    console.log('files:', req.files);
+
+    next();
+});
+
 // app.use(csrfProtection);
 app.use('/uploads', form_routes);
 app.use('/', routes);
 app.use((error, req, res, next) => {
     // res.status(error.httpStatusCode).render(...);
     // res.redirect('/500');
+    console.log(error);
     res.status(404).json({
-        error: 'something went wrong'
+        error: error
     });
 });
 
