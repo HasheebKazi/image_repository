@@ -7,4 +7,4 @@ This app was created with React for the front-end and NodeJs and Express in the 
 
 ## link
 [Live Project](#);
-[Project Notes](https://www.notion.so/Test-Page-a308f54a6fed4e0e8717754ea9756311);
+[Project Notes](https://www.notion.so/Image-Repository-Web-App-a308f54a6fed4e0e8717754ea9756311);
