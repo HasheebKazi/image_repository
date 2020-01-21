@@ -12,7 +12,7 @@ const cors = require('cors');
 // const mongoose = require('mongoose');
 const session = require('express-session');
 // const MongoDBStore = require('connect-mongodb-session')(session);
-
+ 
 // internal modules
 const MONGODB_URI = process.env.MONGODB_URI;
 // console.log(MONGODB_URI);
@@ -39,7 +39,7 @@ const fileFilter = (req, file, cb) => {
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/images/uploads');
+        cb(null, 'uploads');
     },
     filename: (req, file, cb) => {
         cb(null, new Date().toISOString() + '-' + file.originalname);
@@ -54,34 +54,44 @@ app.use(cors({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
+
+app.use(bodyParser.urlencoded({ extended: false }));
 // configure multer
 app.use(multer({
     storage: fileStorage,
     fileFilter: fileFilter
-}).single('image'));
+}).single('image')); // the file in the req body must be called images
 
 app.use((req, res, next) => {
     console.log('got a request');
     console.log('form data:', req.body);
     console.log('files:', req.files);
-
     next();
 });
 
 // app.use(csrfProtection);
 app.use('/uploads', form_routes);
 app.use('/', routes);
-app.use((error, req, res, next) => {
-    // res.status(error.httpStatusCode).render(...);
-    // res.redirect('/500');
-    console.log(error);
+// global error handling middleware
+
+// catch all routes for unknown resources
+app.use((req, res, next) => {
+    // global error handling middleware
     res.status(404).json({
+        message: 'resource not found',
         error: error
     });
 });
 
-// app.use(errorController.get404);
+app.use((error, req, res, next) => {
+
+    // global error handling middleware
+    res.status(500).json({
+        error: error
+    });
+});
+
 
 app.listen(4000);
