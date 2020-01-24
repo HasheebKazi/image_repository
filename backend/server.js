@@ -1,33 +1,29 @@
-// builtins
-const path = require('path');
-
-// get and set environmental variables from .env file in root directory
-require('dotenv').config()
-
-// external modules
+/** External Library Imports **/
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const cors = require('cors');
-// const mongoose = require('mongoose');
-const session = require('express-session');
-// const MongoDBStore = require('connect-mongodb-session')(session);
- 
-// internal modules
-const MONGODB_URI = process.env.MONGODB_URI;
-// console.log(MONGODB_URI);
+const mongoose = require('mongoose');
 
-// models
+/** Internal Dependencies **/
+/** Routes */
+const formRoutes = require('./routes/formRoutes');
+/** Middle Ware */
+const { setCorsHeaders } = require('./middleware/cors');
+/** Builtins */
+const path = require('path');
+/** Environment Variables */
+const MONGODB_URI = require('../magic').URI2;
 
-// routes
-const routes = require('./routes/routes');
-const form_routes = require('./routes/formRoutes');
-
-// controllers
-
-// server initialization
-// const csrfProtection = csrf();
-const app = express();
+/** Source Code **/
+/** File Upload Storage Config */
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images');
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString() + file.originalname)
+    }
+});
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
@@ -37,61 +33,44 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads');
-    },
-    filename: (req, file, cb) => {
-        cb(null, new Date().toISOString() + '-' + file.originalname);
-    }
-});
-
-// server config
-
-// enables cors headers
-app.use(cors({
-    origin: 'http://localhost:3000'
-}));
-
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'uploads')));
+/** Server Config */
+const server = express();
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
-// configure multer
-app.use(multer({
-    storage: fileStorage,
-    fileFilter: fileFilter
-}).single('image')); // the file in the req body must be called images
+/** Middleware */
+// solve CORS ERROS ON THE SERVER NOT CLIENT, BY SETTING SPECIAL HEADERS ON ALL REPONSES
+server.use(setCorsHeaders); // this should probably be the first middleware
+/** Request Parsers */
+server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+server.use(bodyParser.json());
+server.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')); 
 
-app.use((req, res, next) => {
-    console.log('got a request');
-    console.log('form data:', req.body);
-    console.log('files:', req.files);
-    next();
-});
-
-// app.use(csrfProtection);
-app.use('/uploads', form_routes);
-app.use('/', routes);
-// global error handling middleware
-
-// catch all routes for unknown resources
-app.use((req, res, next) => {
-    // global error handling middleware
-    res.status(404).json({
-        message: 'resource not found',
+/** Routes */
+server.use('/form', formRoutes);
+/** Catch All 404 */
+server.use('/', (req, res, next) => {
+    const statusCode = error.statusCode || 500;
+    res.status(statusCode).json({
         error: error
     });
 });
 
-app.use((error, req, res, next) => {
-
-    // global error handling middleware
-    res.status(500).json({
-        error: error
+/** Genereal Error Handler */
+server.use((error, req, res, next) => {
+    console.log('[General Error Handlers]');
+    console.log(error);
+    console.log('[End of Error]');
+    const statusCode = error.statusCode || 500;
+    const message = error.message;
+    res.status(statusCode).json({
+        message: message
     });
 });
 
-
-app.listen(4000);
+/** Start Server **/
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(result => {
+    server.listen(5040);
+}).catch(err => {
+    console.log(err);
+});
