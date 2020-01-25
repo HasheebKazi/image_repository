@@ -49,12 +49,13 @@ server.use(bodyParser.json());
 server.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')); 
 
 /** Routes **/
-server.use('/form', formRoutes);
+server.use('/repo', stockImageRoutes);
+server.use('/auth', authRoutes);
+
 /** Catch All 404 */
 server.use('/', (req, res, next) => {
-    const statusCode = error.statusCode || 500;
-    res.status(statusCode).json({
-        error: error
+    res.status(404).json({
+        message: 'resource not found'
     });
 });
 
