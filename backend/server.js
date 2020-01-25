@@ -74,7 +74,7 @@ server.use((error, req, res, next) => {
 /** Start Server **/
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(result => {
-    server.listen(5040);
+    server.listen(5090);
 }).catch(err => {
     console.log(err);
 });
