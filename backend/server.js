@@ -8,7 +8,8 @@ require('dotenv').config()
 
 /** Internal Dependencies **/
 /** Routes */
-const formRoutes = require('./routes/form_routes');
+const stockImageRoutes = require('./routes/stockImageRoutes');
+const authRoutes = require('./routes/authRoutes');
 /** Middle Ware */
 const { setCorsHeaders } = require('./middleware/cors_middleware');
 /** Builtins */
