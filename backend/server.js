@@ -3,16 +3,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const mongoose = require('mongoose');
+require('dotenv').config()
+
 
 /** Internal Dependencies **/
 /** Routes */
-const formRoutes = require('./routes/formRoutes');
+const formRoutes = require('./routes/form_routes');
 /** Middle Ware */
-const { setCorsHeaders } = require('./middleware/cors');
+const { setCorsHeaders } = require('./middleware/cors_middleware');
 /** Builtins */
 const path = require('path');
 /** Environment Variables */
-const MONGODB_URI = require('../magic').URI2;
+const MONGODB_URI = process.env.URI;
 
 /** Source Code **/
 /** File Upload Storage Config */
@@ -45,7 +47,7 @@ server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 server.use(bodyParser.json());
 server.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')); 
 
-/** Routes */
+/** Routes **/
 server.use('/form', formRoutes);
 /** Catch All 404 */
 server.use('/', (req, res, next) => {
