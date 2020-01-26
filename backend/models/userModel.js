@@ -22,10 +22,10 @@ const userSchema = new  mongoose.Schema(
             type: String, 
             required: true
         },
-        stock_image_posts: {
+        stock_image_posts: [{
             type: Schema.Types.ObjectId,
             ref: 'StockImage'
-        }
+        }]
     },
     { timestamps: true }
 );

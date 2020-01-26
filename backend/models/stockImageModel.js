@@ -1,5 +1,6 @@
 /** External Library Imports **/
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 /** Internal Dependencies **/
 
@@ -19,7 +20,8 @@ const stockImageSchema = new  mongoose.Schema(
             required: true
         },
         creator: {
-            type: Object,
+            type: Schema.Types.ObjectId,
+            ref: 'User',
             required: true
         }
     },
