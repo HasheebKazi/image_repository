@@ -5,10 +5,10 @@ exports.bubbleError = (error, statusCode, next) => {
     next(error);
 };
 
-exports.throwThenbubbleError = (message, statusCode) => {
-    // if you throw an error inside a then block the next catch block is reached, however that catch block must next the error to reach the global error handling middleware
+exports.throwThenbubbleError = (message, statusCode, errorData = []) => {
     let errorMsg = message || 'Error Occured';
     const error = new Error(errorMsg);
+    error.data = errorData;
     error.statusCode = statusCode || 500;
     throw error;
 }

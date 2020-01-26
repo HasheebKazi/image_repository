@@ -22,7 +22,7 @@ const userSchema = new  mongoose.Schema(
             type: String, 
             required: true
         },
-        posts: {
+        stock_image_posts: {
             type: Schema.Types.ObjectId,
             ref: 'StockImage'
         }

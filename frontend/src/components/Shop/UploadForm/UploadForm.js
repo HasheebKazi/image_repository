@@ -49,25 +49,15 @@ class LoginPage extends Component {
     }
 
     fileUpload(file, name) {
-        const formData = new FormData();
-        formData.set('image', 'name');
-        formData.append('image', file, {
-            filename: `image.png`,
-            contentType: 'application/octet-stream',
-            mimeType: 'application/octet-stream'   
-        });
-        formData.append('name', name);
+        const imageUploadForm = new FormData();
+        imageUploadForm.set('image', 'name');
+        imageUploadForm.append('image', file);
+        imageUploadForm.append('name', name);
 
         const payload = {
             method: 'POST',
-            data: {
-                data: formData
-            },
-            url: 'http://localhost:4000/uploads',
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Accept': 'application/json',
-            }
+            data: imageUploadForm,
+            url: 'http://localhost:4000/uploads'
         }
         return axios(payload);
     }
