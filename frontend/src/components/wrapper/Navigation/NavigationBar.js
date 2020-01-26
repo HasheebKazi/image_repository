@@ -16,23 +16,27 @@ const NavationBar = (props) => {
         
         leftNavItems.push(
             <div className={classes.Nav__Item} key="ln_collections" >
-                <NavLink className={classes.Nav__Link} to='/collections'> Collections </NavLink>
+                <NavLink className={classes.Nav__Link} to='/collections'> Shop </NavLink>
             </div>);
         leftNavItems.push(
             <div className={classes.Nav__Item} key="ln_upload" >
                 <NavLink className={classes.Nav__Link} to='/upload'> Upload </NavLink>
             </div>);
+        leftNavItems.push(
+            <div className={classes.Nav__Item} key="ln_manage_stock_photos" >
+                <NavLink className={classes.Nav__Link} to='/upload'> My COllection </NavLink>
+            </div>);
 
         rightNavItems.push(                    
-            <div className={ classes.Nav__Item } key="ln_Signout" >
-                <NavLink className={classes.Nav__Link} to='/mainlogin' onClick={ props.signoutHandler } > Signout </NavLink>
+            <div className={ classes.Nav__Item } key="rn_Signout" >
+                <NavLink className={classes.Nav__Link} to='/login' onClick={ props.signoutHandler } > Signout </NavLink>
             </div>);
 
     } else {
 
         rightNavItems.push(                    
             <div className={ classes.Nav__Item } key="rn_login" >
-                <NavLink className={classes.Nav__Link} to='/login' onClick={ props.loginHandler } > Login </NavLink>
+                <NavLink className={classes.Nav__Link} to='/login' > Login </NavLink>
             </div>);
 
         rightNavItems.push(

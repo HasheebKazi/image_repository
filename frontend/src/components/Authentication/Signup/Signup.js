@@ -14,54 +14,56 @@ class SignupPage extends Component {
         }
     };
 
-    inputChangeHandler = (input, value) => {
-        this.setState({ [input]: value });
+    inputChangeHandler = (event, type) => {
+        const updatedValue = {
+            value: event.target.value
+        }
+        this.setState({ [type]: updatedValue });
       };
 
-    // formSubmitHandler(event) {
-    //     event.preventDefault();
-    //     // this.setState({ authLoading: true });
-    //     fetch('http://localhost:5040/auth/signup', {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             email: authData.signupForm.email.value,
-    //             password: authData.signupForm.password.value,
-    //             name: authData.signupForm.name.value
-    //         })
-    //     })
-    //         .then(res => {
-    //             if (res.status === 422) {
-    //                 throw new Error(
-    //                     "Validation failed. Make sure the email address isn't used yet!"
-    //                 );
-    //             }
-    //             if (res.status !== 200 && res.status !== 201) {
-    //                 console.log('Error!');
-    //                 throw new Error('Creating a user failed!');
-    //             }
-    //             return res.json();
-    //         })
-    //         .then(resData => {
-    //             console.log(resData);
-    //             this.setState({ isAuth: false, authLoading: false });
-    //             this.props.history.replace('/');
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             this.setState({
-    //                 isAuth: false,
-    //                 authLoading: false,
-    //                 error: err
-    //             });
-    //         });
-    // }
+    formSubmitHandler = (event) => {
+        event.preventDefault();
+        // this.setState({ authLoading: true });
+        fetch('http://localhost:5090/auth/signup', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: this.state.email.value,
+                password: this.state.password.value
+            })
+        })
+            .then(res => {
+                if (res.status === 422) {
+                    throw new Error(
+                        "Validation failed. Make sure the email address isn't used yet!"
+                    );
+                }
+                if (res.status !== 200 && res.status !== 201) {
+                    console.log('Error!');
+                    throw new Error('Creating a user failed!');
+                }
+                return res.json();
+            })
+            .then(resData => {
+                console.log(resData);
+                this.setState({ isAuth: false, authLoading: false });
+                this.props.history.replace('/');
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({
+                    isAuth: false,
+                    authLoading: false,
+                    error: err
+                });
+            });
+    }
 
     render() {
         return (
-            <div className={classes.FormPage} onSubmit={ (event) => this.onSubmit(event) } >
+            <div className={classes.FormPage} onSubmit={ (event) => this.formSubmitHandler(event) } >
                 {/* <div className={ classes.FlashMessage }>
                     ... Flash Bar
                 </div> */}
@@ -75,8 +77,8 @@ class SignupPage extends Component {
                             <input className={classes.FormInput__Input} 
                                 type="email" 
                                 name="email" 
-                                value={this.state.email} 
-                                onChange={ this.inputChangeHandler } />
+                                value={this.state.email.value} 
+                                onChange={ event => { this.inputChangeHandler(event, 'email' ) } } />
                         </div>
 
                         <div className={classes.FormControls} >
@@ -84,7 +86,8 @@ class SignupPage extends Component {
                             <input className={classes.FormInput__Input} 
                                 type="Password" 
                                 name="Password" 
-                                value={this.state.password} />
+                                value={this.state.password.value}
+                                onChange={ event => { this.inputChangeHandler(event, 'password' ) } } />
                         </div>
 
                         {/* <div className={classes.FormControls} >

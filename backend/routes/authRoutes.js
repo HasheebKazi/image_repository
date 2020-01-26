@@ -18,7 +18,6 @@ router.put('/signup', [
             }
         })
     }).normalizeEmail(),
-    body('name', 'Invalid Name').trim().not().isEmpty(),
     body('password', 'Invalid Password').trim().isLength({ min: 6 }),
     // body('confirmPassword').trim().custom((value, { req }) => {
     //     if (value !== req.body.password) {

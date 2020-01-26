@@ -13,14 +13,6 @@ const userSchema = new  mongoose.Schema(
         password: {
             type: String, 
             required: true
-        }, 
-        name: {
-            type: String, 
-            required: true
-        },
-        status:  {
-            type: String, 
-            required: true
         },
         stock_image_posts: [{
             type: Schema.Types.ObjectId,
