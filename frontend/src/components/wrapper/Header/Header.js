@@ -16,6 +16,7 @@ class Header extends Component {
     }
 
     onSignout = () => {
+        this.props.onLogin();
     }
 
     render() {

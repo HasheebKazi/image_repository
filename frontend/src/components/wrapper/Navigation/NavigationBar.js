@@ -36,7 +36,12 @@ const NavationBar = (props) => {
 
         rightNavItems.push(                    
             <div className={ classes.Nav__Item } key="rn_login" >
-                <NavLink className={classes.Nav__Link} to='/login' > Login </NavLink>
+                <NavLink 
+                className={ classes.Nav__Link } 
+                to='/login' 
+                onClick={ props.signoutHandler } > { /* temporary prop to auto login once the signin button is clicked */ }
+                    Login 
+                </NavLink>
             </div>);
 
         rightNavItems.push(

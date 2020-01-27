@@ -1,66 +1,90 @@
 import React, { Component } from 'react';
 
-// material ui
-import { Button as MaterialButton } from '@material-ui/core';
-import { TextField as MaterialTextField } from '@material-ui/core';
+// react components
+import Image from '../../UI/Image/Image';
 
 // internal packages
-// import axiosServerInstance from '../../../util/axios_instance';
-import axios from 'axios';
+// eslint-disable-next-line
+import { generateBase64FromImage } from '../../../util/image';
 
 // css
 import classes from './UploadForm.module.css';
 
-class LoginPage extends Component {
+class FileUploadPage extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            file: null,
-            name: ''
-        }
-        this.onFormSubmit = this.onFormSubmit.bind(this)
-        this.onChange = this.onChange.bind(this)
-        this.fileUpload = this.fileUpload.bind(this)
-        this.onNameChange = this.onNameChange.bind(this)
-
+    state = {
+        email: {
+            value: 'test@test.com'
+        },
+        imagePreview: null,
+        error: false,
+        file: null
     }
 
     componentDidMount() {
 
     }
 
-    onFormSubmit(e) {
-        e.preventDefault(); // Stop form submit
-        this.fileUpload(this.state.file, this.state.name)
-        .then((response) => {
-            console.log(response.data);
-        }).catch(err => { 
-            console.log(err) 
-        });
-    }
-
-    onChange(e) {
-        this.setState({ file: e.target.files[0] })
-    }
-
-    onNameChange(event) {
-        this.setState({ name: event.target.value });
-    }
-
-    fileUpload(file, name) {
-        const imageUploadForm = new FormData();
-        imageUploadForm.set('image', 'name');
-        imageUploadForm.append('image', file);
-        imageUploadForm.append('name', name);
-
-        const payload = {
-            method: 'POST',
-            data: imageUploadForm,
-            url: 'http://localhost:4000/uploads'
+    inputChangeHandler = (event, type) => {
+        const updatedValue = {
+            value: event.target.value
         }
-        return axios(payload);
-    }
+        this.setState({ [type]: updatedValue });
+    };
+
+    imageUploadHandler = (event) => {
+        event.preventDefault();
+        // note we can't use JSON to send textual and file data, instead we use another format
+        // Set up data (with image!)
+        // first we create a form object and then append data to it
+        const formData = new FormData();
+        formData.append('email', this.state.email); // use the append method to add 
+        formData.append('image', this.state.imagePreview); // we can append files too
+
+
+        let url = 'http://localhost:5090/repo/stockimage';
+        let reqConfig = {
+            method: 'POST',
+            body: formData, // setting the body to a valid form will also set the correct headers,
+            // headers: {
+            //     Authorization: 'Bearer ' + this.props.token
+            // }
+        };
+
+        fetch(url, reqConfig).then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Creating or editing a post failed!');
+            }
+            return res.json();
+        }).then(resData => {
+            console.log(resData);
+        }).catch(err => {
+            console.log(err);
+            this.setState({
+                error: true
+            });
+        });
+    };
+
+    postInputChangeHandler = (event) => {
+        if (event.target.files) {
+            generateBase64FromImage(event.target.files[0])
+            .then(b64 => {
+                this.setState({ imagePreview: b64 });
+            })
+            .catch(e => {
+                this.setState({ imagePreview: null });
+            });
+            this.setState({ file: event.target.file });
+        }
+    };
+
+    fileInputChangeHandler = (event, type) => {
+        const updatedValue = {
+            value: event.target.value
+        }
+        this.setState({ [type]: updatedValue });
+    };
 
     render() {
         return (
@@ -68,42 +92,37 @@ class LoginPage extends Component {
 
                 <div className={classes.FormContainer} >
                     <h2 style={{ textAlign: 'center' }} >Upload a new stock images.</h2>
-                    <form>
+
+                    <form onSubmit={this.imageUploadHandler} >
 
                         <div className={classes.FormControls} >
-                            <div style={{ width: '80%', margin: '0 auto' }}>
-                                <MaterialTextField
-                                    fullWidth
-                                    required
-                                    label="Image Name"
-                                    value={ this.state.name }
-                                    onChange={ this.onNameChange }
-                                    variant="outlined" />
-                            </div>
+                            <label className={classes.FormInput__Label} htmlFor="email"> Email </label>
+                            <input className={classes.FormInput__Input}
+                                type="email"
+                                name="email"
+                                value={this.state.email.value}
+                                onChange={event => { this.inputChangeHandler(event, 'email') }} />
                         </div>
 
                         <div className={classes.FormControls} >
-                            <div style={{ width: '80%', margin: '0 auto' }}>
-                                <MaterialTextField
-                                    name="tags"
-                                    fullWidth
-                                    label="Tags"
-                                    variant="outlined" />
-                            </div>
-                        </div>
-
-                        <div className={classes.FormControls} >
-                            <input
-                                className={classes.FileInput}
+                            <label className={classes.FormInput__Label} htmlFor="image"> File </label>
+                            <input className={classes.FormInput__Input}
                                 type="file"
-                                accept="image/png, image/jpeg, image/jpg"
-                                onChange={this.onChange}
-                            />
+                                name="image"
+                                onChange={ this.postInputChangeHandler } />
                         </div>
 
+                        {!this.state.imagePreview && <p>Please choose an image.</p>}
+                        {this.state.imagePreview && (
+                            <div className={ classes.center }>
+                                <div className={ classes.new_post__preview_image } >
+                                        <Image imageUrl={this.state.imagePreview} contain left />
+                                </div>
+                            </div>
+                        )}
 
-                        <div className={classes.FormControls} >
-                            <MaterialButton onClick={this.onFormSubmit } style={{ margin: '10px auto', display: 'block' }} variant="contained" > Upload </MaterialButton>
+                        <div className={classes.FormControls}>
+                            <button className={classes.FormButton} type="submit" > Submit </button>
                         </div>
 
                     </form>
@@ -115,4 +134,4 @@ class LoginPage extends Component {
 
 };
 
-export default LoginPage;
+export default FileUploadPage;
