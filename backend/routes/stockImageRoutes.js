@@ -9,7 +9,7 @@ const isAuth = require('../middleware/auth_middleware');
 /** Source Code **/
 /** /repo/stockimage */
 router.get('/stockimage/:stockImageId', isAuth, stockImageControllers.getStockImage);
-router.post('/post', [
+router.post('/stockimage', [
     body('title', 'Invalid Title').trim().isLength({ min: 5 }),
     body('description', 'Invalid description').trim().isLength({ min: 10 })
 ],

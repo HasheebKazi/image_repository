@@ -17,12 +17,12 @@ const stockImageSchema = new  mongoose.Schema(
         },
         description: {
             type: String,
-            required: true
+            // required: true
         },
         creator: {
             type: Schema.Types.ObjectId,
             ref: 'User',
-            required: true
+            // required: true
         }
     },
     { timestamps: true }

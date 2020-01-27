@@ -1,5 +1,4 @@
 # Stock Image Repository Web App
-
 This is an stock image selling website similar to [https://stock.adobe.com](https://stock.adobe.com/). The project is created using React, NodeJs, Express, MongoDB.
 
 ## info

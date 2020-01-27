@@ -21,7 +21,7 @@ const MONGODB_URI = process.env.URI;
 /** File Upload Storage Config */
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'images');
+        cb(null, 'uploads');
     },
     filename: (req, file, cb) => {
         cb(null, new Date().toISOString() + file.originalname)
@@ -46,7 +46,7 @@ server.use(setCorsHeaders); // this should probably be the first middleware
 /** Request Parsers */
 server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 server.use(bodyParser.json());
-server.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')); 
+server.use(multer({ storage: fileStorage, fileFilter: fileFilter , limits: { fieldSize: 100 * 1024 * 1024 } }).single('image')); 
 
 /** Routes **/
 server.use('/repo', stockImageRoutes);

@@ -39,7 +39,7 @@ class FileUploadPage extends Component {
         // first we create a form object and then append data to it
         const formData = new FormData();
         formData.append('email', this.state.email); // use the append method to add 
-        formData.append('image', this.state.imagePreview); // we can append files too
+        formData.append('file', this.state.file); // we can append files too
 
 
         let url = 'http://localhost:5090/repo/stockimage';

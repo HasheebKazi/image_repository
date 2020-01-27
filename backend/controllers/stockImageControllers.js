@@ -104,42 +104,42 @@ exports.putStockImage = (req, res, next) => { // update post
     }
 };
 
-exports.postCreateStockImage = (req, res, next) => {
-    let creator = null;
-    // validate inputs
-    const errors = validationResult(req); // auto request any validation errors
-    if (!errors.isEmpty()) {
-        throwThenbubbleError('Invalid Input.', 422, errors.array());
-    } else if (!req.file) {
-        throwThenbubbleError('File not found.', 422, errors.array());
-    } else { // if inputs are valid
-        const title = req.body.title;
-        const description = req.body.description;
-        const imageUrl = req.file.path;
+// exports.postCreateStockImage = (req, res, next) => {
+//     let creator = null;
+//     // validate inputs
+//     const errors = validationResult(req); // auto request any validation errors
+//     if (!errors.isEmpty()) {
+//         throwThenbubbleError('Invalid Input.', 422, errors.array());
+//     } else if (!req.file) {
+//         throwThenbubbleError('File not found.', 422, errors.array());
+//     } else { // if inputs are valid
+//         const title = req.body.title;
+//         const description = req.body.description;
+//         const imageUrl = req.file.path;
 
-        const stockImage = new StockImage({
-            title: title,
-            description: description,
-            imageUrl: imageUrl,
-            creator: req.userId
-        });
-        stockImage.save()
-        .then(result => {
-            return User.findById(req.userId) 
-        }).then(user => {
-            creator = user;
-            user.stock_image_posts.push(stockImage);
-            user.save();
-        })
-        .then(result => {
-            res.status(200).json({ message: 'Stock Image created successfully', StockImage: stockImage, creator: { _id: creator._id } });
-        })
-        .catch(error => {
-            bubbleError(error, error.statusCode, next);
-        });
+//         const stockImage = new StockImage({
+//             title: title,
+//             description: description,
+//             imageUrl: imageUrl,
+//             creator: req.userId
+//         });
+//         stockImage.save()
+//         .then(result => {
+//             return User.findById(req.userId) 
+//         }).then(user => {
+//             creator = user;
+//             user.stock_image_posts.push(stockImage);
+//             user.save();
+//         })
+//         .then(result => {
+//             res.status(200).json({ message: 'Stock Image created successfully', StockImage: stockImage, creator: { _id: creator._id } });
+//         })
+//         .catch(error => {
+//             bubbleError(error, error.statusCode, next);
+//         });
     
-    }
-};
+//     }
+// };
 
 exports.deleteStockImage = (req, res, next) => {
     const stockImageId = req.params.stockImageId;
@@ -172,4 +172,49 @@ exports.deleteStockImage = (req, res, next) => {
     .catch(error => {
         bubbleError(error, error.statusCode, next);
     });
+};
+
+
+
+// temp
+
+exports.postCreateStockImage = (req, res, next) => {
+    // let creator = null;
+    // // validate inputs
+    // const errors = validationResult(req); // auto request any validation errors
+    // if (!errors.isEmpty()) {
+    //     throwThenbubbleError('Invalid Input.', 422, errors.array());
+    // } else 
+
+
+    
+    // if (!req.file) {
+    //     throwThenbubbleError('File not found.', 422, errors.array());
+    // } else { // if inputs are valid
+        const email = req.body.email;
+        const imageUrl = req.file.path;
+
+        const stockImage = new StockImage({
+            title: title,
+            description: 'lorem ipsum',
+            imageUrl: imageUrl
+        });
+        stockImage.save()
+        .then(result => {
+            // return User.findById(req.userId) 
+            return
+        }).then(user => {
+            // creator = user;
+            // user.stock_image_posts.push(stockImage);
+            // user.save();
+            return
+        })
+        .then(result => {
+            res.status(200).json({ message: 'Stock Image created successfully', StockImage: stockImage, creator: { _id: creator._id } });
+        })
+        .catch(error => {
+            bubbleError(error, error.statusCode, next);
+        });
+    
+    // }
 };
