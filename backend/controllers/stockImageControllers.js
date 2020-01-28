@@ -195,7 +195,7 @@ exports.postCreateStockImage = (req, res, next) => {
         const imageUrl = req.file.path;
 
         const stockImage = new StockImage({
-            title: title,
+            title: email,
             description: 'lorem ipsum',
             imageUrl: imageUrl
         });
@@ -210,7 +210,7 @@ exports.postCreateStockImage = (req, res, next) => {
             return
         })
         .then(result => {
-            res.status(200).json({ message: 'Stock Image created successfully', StockImage: stockImage, creator: { _id: creator._id } });
+            res.status(200).json({ message: 'Stock Image created successfully', StockImage: stockImage, creator: { _id: '' } });
         })
         .catch(error => {
             bubbleError(error, error.statusCode, next);

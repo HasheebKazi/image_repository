@@ -21,10 +21,6 @@ class FileUploadPage extends Component {
         file: null
     }
 
-    componentDidMount() {
-
-    }
-
     inputChangeHandler = (event, type) => {
         const updatedValue = {
             value: event.target.value
@@ -75,15 +71,8 @@ class FileUploadPage extends Component {
             .catch(e => {
                 this.setState({ imagePreview: null });
             });
-            this.setState({ file: event.target.file });
+            this.setState({ file: event.target.files[0] });
         }
-    };
-
-    fileInputChangeHandler = (event, type) => {
-        const updatedValue = {
-            value: event.target.value
-        }
-        this.setState({ [type]: updatedValue });
     };
 
     render() {

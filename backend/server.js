@@ -46,7 +46,7 @@ server.use(setCorsHeaders); // this should probably be the first middleware
 /** Request Parsers */
 server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 server.use(bodyParser.json());
-server.use(multer({ storage: fileStorage, fileFilter: fileFilter , limits: { fieldSize: 100 * 1024 * 1024 } }).single('image')); 
+server.use(multer({ storage: fileStorage, fileFilter: fileFilter , limits: { fieldSize: 100 * 1024 * 1024 } }).single('file')); 
 
 /** Routes **/
 server.use('/repo', stockImageRoutes);
