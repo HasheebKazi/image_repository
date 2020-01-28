@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
 // react components
-import ImageRepository from '../../components/Repository/ImageRepository';
+import ImageRepository from '../ImageRepository/ImageRepository';
 import LoginPage from '../../components/Authentication/Login/Login';
 import SignupPage from '../../components/Authentication/Signup/Signup';
 import ImageUploadPage from '../../components/Shop/UploadForm/UploadForm';

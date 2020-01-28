@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 // react components
-import Toolbar from './Toolbar/Toolbar';
-import ImageGallery from './ImageGallery/ImageGallery';
+import Toolbar from '../../components/Repository/Toolbar/Toolbar';
+import ImageGallery from '../../components/Repository/ImageGallery/ImageGallery';
 
 
 class ImageRepository extends Component {
