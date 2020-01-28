@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import axios from 'axios';
-
 // css 
 import classes from './Footer.module.css';
 
@@ -13,17 +11,7 @@ class Footer extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/msg')
-        .then(res => {
-            if (res.data) {
-                this.setState({ targetedMsg: res.data['msg'] });
-            } else {
-                this.setState({ targetedMsg: 'no data' });
-            }
-        }).catch(error => {
-            this.setState({ targetedMsg: 'This is a message! It has words and punctuation!' });
-            console.log(error);
-        })
+
     }
 
     render() {
