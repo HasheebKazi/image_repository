@@ -7,7 +7,7 @@ import * as actionTypes from '../../store/actions';
 import ImageRepository from '../ImageRepository/ImageRepository';
 import LoginPage from '../../components/Authentication/Login/Login';
 import SignupPage from '../../components/Authentication/Signup/Signup';
-import ImageUploadPage from '../../components/Shop/UploadForm/UploadForm';
+import ImageUploadPage from '../../components/UserAdmin/UploadForm/UploadForm';
 
 // css
 import classes from './Main.module.css';
