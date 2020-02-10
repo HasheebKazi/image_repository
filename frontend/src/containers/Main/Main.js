@@ -46,7 +46,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: () => dispatch({ type: actionTypes.LOGIN })
+        onLogin: () => dispatch({ type: actionTypes.LOGIN }),
+        onLogout: () => dispatch({ type: actionTypes.LOGOUT })
     };
 };
 
